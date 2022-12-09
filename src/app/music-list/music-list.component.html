@@ -1,0 +1,28 @@
+<div class="music-list">
+  <div class="header">
+    <div class="row">
+      <span>Music list</span>
+    </div>
+  </div>
+  <ul *ngFor="let music of allMusic; let i = index">
+    <!-- here li list are coming from js -->
+    <li (click)="onPlayListSong(i)">
+      <div class="play-pause">
+        <i class="material-icons">{{
+          isSongPlaying && i === activeSongIndex ? "pause" : "play_arrow"
+        }}</i>
+      </div>
+      <div class="song-details">
+        <span>{{ music.songName }}</span>
+        <p>{{ music.artistName }}</p>
+      </div>
+      <!-- Audio Duration -->
+      <div class="music-list-duration" #musicListDuration>3: 05</div>
+      <audio
+        #listAudioRef
+        [src]="music.src"
+        (loadeddata)="onLoadedData()"
+      ></audio>
+    </li>
+  </ul>
+</div>

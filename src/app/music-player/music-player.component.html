@@ -1,0 +1,68 @@
+<div class="wrapper">
+  <section class="music-list">
+    <!-- <app-music-list
+      [allMusic]="allMusic"
+      (activeSong)="playListActiveSong($event)"
+      [activeSongIndex]="musicIndex"
+      [isSongPlaying]="isSongPlaying"
+    ></app-music-list> -->
+  </section>
+  <section class="music-player">
+    <!-- Current track -->
+    <div class="current-track-wrapper">
+      <div class="top-bar"></div>
+    </div>
+    <div class="img-area">
+      <img [src]="currentMusic.img" alt="" />
+    </div>
+    <div class="song-details">
+      <p class="name">{{ currentMusic.songName }}</p>
+      <p class="artist">{{ currentMusic.artistName }}</p>
+    </div>
+    <div
+      class="progress-area"
+      #progressArea
+      (click)="onProgressAreaClick($event)"
+    >
+      <div class="progress-bar" #progressBar>
+        <audio
+          id="main-audio"
+          [src]="currentMusic.src"
+          #audioRef
+          (timeupdate)="onChangeAudio($event)"
+          (loadeddata)="onLoadedData()"
+          (ended)="onSongEnd()"
+        ></audio>
+      </div>
+      <div class="song-timer">
+        <span class="current-time" #currentTime>0:00</span>
+        <span class="max-duration" #maxDuration>0:00</span>
+      </div>
+    </div>
+    <div class="controls">
+      <i
+        id="repeat-plist"
+        class="material-icons"
+        title="Playlist looped"
+        (click)="repeatToggle()"
+        >{{ isRepeatSongOn ? "repeat_on" : "repeat" }}</i
+      >
+      <i id="prev" class="material-icons" (click)="previousMusic()"
+        >skip_previous</i
+      >
+      <div class="play-pause">
+        <i class="material-icons" (click)="playPauseMusic()">{{
+          isSongPlaying ? "pause" : "play_arrow"
+        }}</i>
+      </div>
+      <i id="next" class="material-icons" (click)="nextMusic()">skip_next</i>
+      <!-- <i id="more-music" class="material-icons">queue_music</i> -->
+      <i
+        class="material-icons"
+        title="Playback shuffled"
+        (click)="shuffleToggle()"
+        >{{ isShuffleOn ? "shuffle_on" : "shuffle" }}</i
+      >
+    </div>
+  </section>
+</div>
