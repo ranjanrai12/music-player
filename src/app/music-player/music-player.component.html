@@ -1,24 +1,33 @@
-<div class="wrapper">
+<div class="wrapper container-fluid">
+  <header class="row header">
+    <div class="col-12 search-field input-group md-form form-sm form-2 pl-0">
+      <input
+        class="form-control my-0 py-1 red-border"
+        type="text"
+        placeholder="Search"
+        aria-label="Search"
+        [(ngModel)]="searchText"
+        (input)="onSearch($event)"
+      />
+    </div>
+    <div class="col-4 img-area">
+      <img [src]="currentMusic.img" alt="" class="img-thumbnail" />
+    </div>
+    <div class="col-5">
+      <h3>{{ currentMusic.songName }}</h3>
+      <p>{{ currentMusic.artistName }}</p>
+    </div>
+  </header>
   <section class="music-list">
-    <!-- <app-music-list
+    <app-music-list
       [allMusic]="allMusic"
       (activeSong)="playListActiveSong($event)"
       [activeSongIndex]="musicIndex"
       [isSongPlaying]="isSongPlaying"
-    ></app-music-list> -->
+      [searchText]="searchText"
+    ></app-music-list>
   </section>
-  <section class="music-player">
-    <!-- Current track -->
-    <div class="current-track-wrapper">
-      <div class="top-bar"></div>
-    </div>
-    <div class="img-area">
-      <img [src]="currentMusic.img" alt="" />
-    </div>
-    <div class="song-details">
-      <p class="name">{{ currentMusic.songName }}</p>
-      <p class="artist">{{ currentMusic.artistName }}</p>
-    </div>
+  <footer class="footer">
     <div
       class="progress-area"
       #progressArea
@@ -64,5 +73,5 @@
         >{{ isShuffleOn ? "shuffle_on" : "shuffle" }}</i
       >
     </div>
-  </section>
+  </footer>
 </div>

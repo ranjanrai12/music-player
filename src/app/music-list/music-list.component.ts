@@ -8,6 +8,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
+import { MusicInterface } from '../interfaces/music.interface';
 
 @Component({
   selector: 'app-music-list',
@@ -15,7 +16,7 @@ import {
   styleUrls: ['./music-list.component.scss'],
 })
 export class MusicListComponent implements OnInit {
-  @Input() allMusic: any[] = [];
+  @Input() allMusic: MusicInterface[] = [];
   @ViewChildren('musicListDuration')
   musicListDuration!: QueryList<ElementRef>;
   @ViewChildren('listAudioRef')
@@ -23,12 +24,13 @@ export class MusicListComponent implements OnInit {
   @Output() activeSong = new EventEmitter<number>();
   @Input() activeSongIndex: number = 0;
   @Input() isSongPlaying: boolean = false;
+  @Input() searchText: any;
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  // To show music duraion on song list
+  // To show music duraion on song list, it's heavy operation
   onLoadedData() {
     this.listAudioRef.forEach((ele, index) => {
       let totalMin = Math.floor(ele.nativeElement.duration / 60);
@@ -47,5 +49,10 @@ export class MusicListComponent implements OnInit {
 
   onPlayListSong(currentIndex: number) {
     this.activeSong.emit(currentIndex);
+  }
+
+  trackByFun(index: number, item: MusicInterface) {
+    if (!item) return null;
+    return item.id;
   }
 }

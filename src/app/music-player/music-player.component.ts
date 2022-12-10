@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MusicInterface } from '../interfaces/music.interface';
 
 @Component({
   selector: 'app-music-player',
@@ -9,49 +10,66 @@ export class MusicPlayerComponent implements OnInit {
   isSongPlaying = false;
   isRepeatSongOn = false;
   isShuffleOn = false;
+  searchText = '';
   @ViewChild('audioRef')
   mainAudioRef!: ElementRef;
-  allMusic: {
-    songName: string;
-    artistName: string;
-    img: string;
-    src: string;
-  }[] = [
+  orignalMusic: MusicInterface[] = [];
+  allMusic: MusicInterface[] = [
     {
       songName: 'Harley Bird - Home',
       artistName: 'Jordan Schor',
       img: '/assets/images/music-1.jpg',
       src: '/assets/songs/music-1.mp3',
+      id: 123123,
     },
     {
       songName: 'Ikson Anywhere – Ikson',
       artistName: 'Audio Library',
       img: '/assets/images/music-2.jpg',
       src: '/assets/songs/music-2.mp3',
+      id: 234567,
     },
     {
       songName: 'Beauz & Jvna - Crazy',
       artistName: 'Beauz & Jvna',
       img: '/assets/images/music-3.jpg',
       src: '/assets/songs/music-3.mp3',
+      id: 567234,
     },
     {
       songName: 'Hardwind - Want Me',
       artistName: 'Mike Archangelo',
       img: '/assets/images/music-4.jpg',
       src: '/assets/songs/music-4.mp3',
+      id: 456678,
     },
     {
       songName: 'Jim - Sun Goes Down',
       artistName: 'Jim Yosef x Roy',
       img: '/assets/images/music-5.jpg',
       src: '/assets/songs/music-5.mp3',
+      id: 234123,
     },
     {
       songName: 'Lost Sky - Vision NCS',
       artistName: 'NCS Release',
       img: '/assets/images/music-6.jpg',
       src: '/assets/songs/music-6.mp3',
+      id: 456234,
+    },
+    {
+      songName: 'Rema - Calm Down',
+      artistName: 'Selena Gomez, Rema',
+      img: '/assets/images/music-7.jpg',
+      src: '/assets/songs/music-7.mp3',
+      id: 456643,
+    },
+    {
+      songName: 'Love Your Voice',
+      artistName: 'johnny',
+      img: '/assets/images/music-8.jpg',
+      src: '/assets/songs/music-8.mp3',
+      id: 897231,
     },
   ];
   @ViewChild('progressArea')
@@ -62,12 +80,13 @@ export class MusicPlayerComponent implements OnInit {
   currentTime!: ElementRef;
   @ViewChild('maxDuration')
   maxDuration!: ElementRef;
-  currentMusic: any = {};
+  currentMusic: MusicInterface = {} as MusicInterface;
   // at loading time consider to load first music
   musicIndex = 0;
   constructor() {}
 
   ngOnInit(): void {
+    this.orignalMusic = this.allMusic;
     this.loadMusic();
   }
 
@@ -209,6 +228,16 @@ export class MusicPlayerComponent implements OnInit {
       setTimeout(() => {
         this.playMusic();
       }, 100);
+    }
+  }
+
+  onSearch(event: any) {
+    if (event.target.value) {
+      this.allMusic = this.orignalMusic.filter((music: MusicInterface) =>
+        music.songName.toLowerCase().includes(event.target.value.toLowerCase())
+      );
+    } else {
+      this.allMusic = this.orignalMusic;
     }
   }
 }
